@@ -1,14 +1,17 @@
-import React from "react";
+/**
+ * @file Flex interaction alerts (Typescript, Flex 2.0)
+ * @author Chris Connolly <cconnolly@twilio.com>
+ * @version 1.0.0
+ * @description Change the AUDIO_FILE to point to a publicly available URL with a sound file (Wave, MP3, etc)
+ */
 import * as Flex from "@twilio/flex-ui";
 import { FlexPlugin } from "@twilio/flex-plugin";
 import { AudioPlayerError } from "@twilio/flex-ui";
 
 const PLUGIN_NAME = "FlexInteractionAlertPlugin";
 
-export interface ChromeAudio extends HTMLAudioElement {
-  setSinkId(id: string): void;
-}
-
+const AUDIO_FILE =
+  "https://www.soundboard.com/mediafiles/mz/Mzg1ODMxNTIzMzg1ODM3_JzthsfvUY24.MP3";
 export default class FlexInteractionAlertPlugin extends FlexPlugin {
   constructor() {
     super(PLUGIN_NAME);
@@ -46,7 +49,7 @@ export default class FlexInteractionAlertPlugin extends FlexPlugin {
       ) {
         mediaId = Flex.AudioPlayerManager.play(
           {
-            url: "https://www.soundboard.com/mediafiles/mz/Mzg1ODMxNTIzMzg1ODM3_JzthsfvUY24.MP3",
+            url: AUDIO_FILE,
             repeatable: true,
           },
           (error: AudioPlayerError) => {

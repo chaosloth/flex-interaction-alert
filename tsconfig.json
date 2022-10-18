@@ -25,8 +25,7 @@
     "noUnusedParameters": false
   },
   "include": [
-    "./src/**/*"
-, "./src/custom_types/audio.d.ts"  ],
+    "./src/**/*"  ],
   "exclude": [
     "./**/*.test.ts",
     "./**/*.test.tsx",
