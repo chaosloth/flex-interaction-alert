@@ -2,6 +2,7 @@ import React from "react";
 import * as Flex from "@twilio/flex-ui";
 import { FlexPlugin } from "@twilio/flex-plugin";
 import DeviceManager from "./components/DeviceManager/DeviceManager";
+import { AudioPlayerError } from "@twilio/flex-ui";
 
 const PLUGIN_NAME = "FlexInteractionAlertPlugin";
 
@@ -20,12 +21,6 @@ export default class FlexInteractionAlertPlugin extends FlexPlugin {
    * @param flex { typeof Flex }
    */
   async init(flex: typeof Flex, manager: Flex.Manager): Promise<void> {
-    let alertSound: ChromeAudio = new Audio(
-      "%PUBLIC_URL%/alert.mp3"
-    ) as ChromeAudio;
-
-    alertSound.loop = true;
-
     const resStatus = [
       "accepted",
       "canceled",
@@ -48,30 +43,28 @@ export default class FlexInteractionAlertPlugin extends FlexPlugin {
       align: "end",
     });
 
+    let mediaId: string = "";
+
     manager.workerClient.on("reservationCreated", function (reservation) {
       if (
         reservation.task.taskChannelUniqueName === "voice" &&
         reservation.task.attributes.direction === "inbound"
       ) {
-        if (!manager?.voiceClient?.audio) {
-          console.error(PLUGIN_NAME + ": Manager is not defined");
-          return;
-        }
-
-        // setSinkId is currently only available in Chrome-like browsers, check if it is exists
-        if (typeof alertSound.setSinkId == "function") {
-          manager.voiceClient.audio.ringtoneDevices.get().forEach((device) => {
-            alertSound.setSinkId(device.deviceId);
-          });
-        }
-
-        // Play the sound
-        alertSound.play();
+        mediaId = Flex.AudioPlayerManager.play(
+          {
+            url: "alert.mp3",
+            repeatable: true,
+          },
+          (error: AudioPlayerError) => {
+            // handle error
+            console.error(PLUGIN_NAME + ": Error playing sound", error);
+          }
+        );
       }
 
       resStatus.forEach((e) => {
         reservation.on(e, () => {
-          alertSound.pause();
+          if (mediaId && mediaId != "") Flex.AudioPlayerManager.stop(mediaId);
         });
       });
     });
