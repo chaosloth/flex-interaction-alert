@@ -1,8 +1,8 @@
 import React from "react";
 import * as Flex from "@twilio/flex-ui";
 import { FlexPlugin } from "@twilio/flex-plugin";
-import DeviceManager from "./components/DeviceManager/DeviceManager";
 import { AudioPlayerError } from "@twilio/flex-ui";
+import { audioFile } from "./alert.mp3";
 
 const PLUGIN_NAME = "FlexInteractionAlertPlugin";
 
@@ -38,11 +38,6 @@ export default class FlexInteractionAlertPlugin extends FlexPlugin {
       return;
     }
 
-    flex.MainHeader.Content.add(<DeviceManager key="device-manager" />, {
-      sortOrder: 0,
-      align: "end",
-    });
-
     let mediaId: string = "";
 
     manager.workerClient.on("reservationCreated", function (reservation) {
@@ -52,7 +47,7 @@ export default class FlexInteractionAlertPlugin extends FlexPlugin {
       ) {
         mediaId = Flex.AudioPlayerManager.play(
           {
-            url: "alert.mp3",
+            url: audioFile,
             repeatable: true,
           },
           (error: AudioPlayerError) => {
