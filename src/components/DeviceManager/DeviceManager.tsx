@@ -74,12 +74,12 @@ const DeviceManager: React.FunctionComponent = () => {
         vAlignContent={"center"}
       >
         <MenuButton {...menu} variant={menu.visible ? "primary" : "reset"}>
-          <AgentIcon decorative />
+          <AgentIcon size={"sizeIcon40"} decorative />
         </MenuButton>
         <Menu {...menu} aria-label="Actions">
           <MenuGroup
             label="Select an Audio Device"
-            icon={<VolumeOnIcon decorative />}
+            icon={<VolumeOnIcon size={"sizeIcon40"} decorative />}
           >
             {devices.map((device) => {
               if (device.kind == "audiooutput") {

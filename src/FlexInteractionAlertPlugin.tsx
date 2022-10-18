@@ -1,7 +1,7 @@
 import React from "react";
 import * as Flex from "@twilio/flex-ui";
 import { FlexPlugin } from "@twilio/flex-plugin";
-import DeviceManager from "components/DeviceManager/DeviceManager";
+import DeviceManager from "./components/DeviceManager/DeviceManager";
 
 const PLUGIN_NAME = "FlexInteractionAlertPlugin";
 
@@ -20,7 +20,6 @@ export default class FlexInteractionAlertPlugin extends FlexPlugin {
    * @param flex { typeof Flex }
    */
   async init(flex: typeof Flex, manager: Flex.Manager): Promise<void> {
-    const options: Flex.ContentFragmentProps = { sortOrder: -1 };
     let alertSound: ChromeAudio = new Audio(
       "%PUBLIC_URL%/alert.mp3"
     ) as ChromeAudio;
