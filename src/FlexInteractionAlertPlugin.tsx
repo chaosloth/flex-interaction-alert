@@ -2,7 +2,6 @@ import React from "react";
 import * as Flex from "@twilio/flex-ui";
 import { FlexPlugin } from "@twilio/flex-plugin";
 import { AudioPlayerError } from "@twilio/flex-ui";
-import { audioFile } from "./alert.mp3";
 
 const PLUGIN_NAME = "FlexInteractionAlertPlugin";
 
@@ -47,7 +46,7 @@ export default class FlexInteractionAlertPlugin extends FlexPlugin {
       ) {
         mediaId = Flex.AudioPlayerManager.play(
           {
-            url: audioFile,
+            url: "https://www.soundboard.com/mediafiles/mz/Mzg1ODMxNTIzMzg1ODM3_JzthsfvUY24.MP3",
             repeatable: true,
           },
           (error: AudioPlayerError) => {
